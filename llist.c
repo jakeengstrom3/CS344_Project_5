@@ -58,9 +58,9 @@ void llist_insert_head(struct node **head, struct node *n){
 
 struct node *llist_delete_head(struct node **head){
     if(*head == NULL){ // Do nothing if the list is empty (head is null)
-        return *head;
+        return NULL;
     }
-    struct node *next = (*head)->next; //Save the pointer to the next node
+    struct node *next = (*head)->next; //Save the pointer to the next node (OK if this is NULL as it will set head to null when deleting last value)
     node_free(*head); // Free memory locaion that head points to
     *head = next; // Set head to point to the second node.
     return *head;
@@ -90,6 +90,9 @@ void llist_print(struct node *head){
 
 }
 void llist_free(struct node **head){
+    if(*head == NULL){
+        return;
+    }
     while ( (*head)->next != NULL){ // Just call delete head until next is null (Last node)
         llist_delete_head(head);
     } 
